@@ -1,4 +1,4 @@
-package br.com.pronova.prodsync.domain.entities;
+﻿package br.com.pronova.prodsync.domain.entities;
 
 import jakarta.persistence.*;
 import br.com.pronova.prodsync.domain.entities.Role;
@@ -33,4 +33,9 @@ public class Colaborador {
     @Builder.Default
     private Boolean ativo = true;
 
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private Role role;
+
 }
+
