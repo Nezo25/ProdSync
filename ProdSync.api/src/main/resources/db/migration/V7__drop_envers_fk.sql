@@ -1,0 +1,1 @@
+﻿ALTER TABLE registros_produtividade_aud DROP FOREIGN KEY fk_produtividade_revinfo;
