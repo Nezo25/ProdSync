@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ProblemDetail handleValidationExceptions(MethodArgumentNotValidException ex) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Erro de validação nos campos informados.");
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Erro de validaÃ§Ã£o nos campos informados.");
         
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach(error -> {
@@ -54,21 +54,21 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ProblemDetail handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Corpo da requisição ausente ou mal formatado.");
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Corpo da requisiÃ§Ã£o ausente ou mal formatado.");
         problemDetail.setProperty("timestamp", LocalDateTime.now());
         return problemDetail;
     }
 
-    @ExceptionHandler(DataIntegrityViolationException.class)
+    //@ExceptionHandler(DataIntegrityViolationException.class)
     public ProblemDetail handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, "Conflito de dados: violação de integridade no banco de dados.");
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, "Conflito de dados: violaÃ§Ã£o de integridade no banco de dados.");
         problemDetail.setProperty("timestamp", LocalDateTime.now());
         return problemDetail;
     }
 
     @ExceptionHandler(ObjectOptimisticLockingFailureException.class)
     public ProblemDetail handleOptimisticLockingFailureException(ObjectOptimisticLockingFailureException ex) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, "Este registro foi modificado por outro usuário. Por favor, atualize a página e tente novamente.");
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, "Este registro foi modificado por outro usuÃ¡rio. Por favor, atualize a pÃ¡gina e tente novamente.");
         problemDetail.setProperty("timestamp", LocalDateTime.now());
         return problemDetail;
     }
@@ -82,9 +82,17 @@ public class GlobalExceptionHandler {
     
     @ExceptionHandler(Exception.class)
     public ProblemDetail handleGeneralExceptions(Exception ex) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, "Ocorreu um erro inesperado no servidor.");
+        String msg = "Erro: " + ex.getMessage();
+        if (ex.getCause() != null) {
+            msg += " | Causa: " + ex.getCause().getMessage();
+            if (ex.getCause().getCause() != null) {
+                msg += " | Raiz: " + ex.getCause().getCause().getMessage();
+            }
+        }
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, msg);
         problemDetail.setProperty("details", ex.getMessage());
         problemDetail.setProperty("timestamp", LocalDateTime.now());
         return problemDetail;
     }
 }
+
