@@ -1,4 +1,4 @@
-﻿package br.com.pronova.prodsync.security;
+package br.com.pronova.prodsync.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

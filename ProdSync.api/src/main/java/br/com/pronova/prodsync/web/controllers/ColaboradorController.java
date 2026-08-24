@@ -1,4 +1,4 @@
-﻿package br.com.pronova.prodsync.web.controllers;
+package br.com.pronova.prodsync.web.controllers;
 
 import br.com.pronova.prodsync.domain.entities.Colaborador;
 import br.com.pronova.prodsync.domain.repositories.ColaboradorRepository;
