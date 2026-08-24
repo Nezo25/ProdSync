@@ -1,4 +1,4 @@
-package br.com.pronova.prodsync.domain.entities;
+﻿package br.com.pronova.prodsync.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,7 +33,7 @@ public class RegistroProdutividade {
     private Colaborador colaborador;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "turno_id", nullable = false)
+    @JoinColumn(name = "turno_id")
     @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     private Turno turno;
 
@@ -55,3 +55,4 @@ public class RegistroProdutividade {
     private Integer faixaHoraria; // Ex: 8 para 08:00 - 08:59
 
 }
+
