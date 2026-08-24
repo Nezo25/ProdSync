@@ -64,7 +64,15 @@ public class CsvImportService {
             registroRepository.saveAll(registrosParaSalvar);
 
         } catch (Exception e) {
-            throw new br.com.pronova.prodsync.exceptions.CsvProcessingException("Erro ao processar arquivo CSV: " + e.getMessage(), e);
+            String errorMsg = e.getMessage();
+            if (e.getCause() != null) {
+                errorMsg += " | Cause: " + e.getCause().getMessage();
+                if (e.getCause().getCause() != null) {
+                    errorMsg += " | Root: " + e.getCause().getCause().getMessage();
+                }
+            }
+            throw new br.com.pronova.prodsync.exceptions.CsvProcessingException("Erro ao processar arquivo CSV: " + errorMsg, e);
         }
     }
 }
+
