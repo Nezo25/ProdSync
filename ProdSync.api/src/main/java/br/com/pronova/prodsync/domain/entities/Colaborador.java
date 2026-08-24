@@ -1,4 +1,4 @@
-﻿package br.com.pronova.prodsync.domain.entities;
+package br.com.pronova.prodsync.domain.entities;
 
 import jakarta.persistence.*;
 import br.com.pronova.prodsync.domain.entities.Role;
