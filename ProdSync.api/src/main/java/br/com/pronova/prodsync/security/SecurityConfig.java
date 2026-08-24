@@ -1,4 +1,4 @@
-package br.com.pronova.prodsync.security;
+﻿package br.com.pronova.prodsync.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -33,7 +33,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/v1/webhooks/totvs/**").authenticated() // Protheus via API Key
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll() // Swagger
-                .requestMatchers("/api/v1/dashboard/**", "/api/v1/bi/**", "/api/v1/colaboradores/**", "/api/v1/chamados/**", "/ws-prodsync/**").permitAll() // TEMPORARY: Allow dashboards until JWT is implemented in React
+                .requestMatchers("/api/v1/dashboard/**", "/api/v1/bi/**", "/api/v1/colaboradores/**", "/api/v1/chamados/**", "/api/v1/importacao/**", "/ws-prodsync/**").permitAll() // TEMPORARY: Allow dashboards until JWT is implemented in React
                 .anyRequest().authenticated() // Dashboards via JWT
             )
             .addFilterBefore(apiKeyAuthFilter, UsernamePasswordAuthenticationFilter.class)
@@ -54,3 +54,4 @@ public class SecurityConfig {
         return source;
     }
 }
+

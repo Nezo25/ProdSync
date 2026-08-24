@@ -1,4 +1,4 @@
-package br.com.pronova.prodsync.web.controllers;
+﻿package br.com.pronova.prodsync.web.controllers;
 
 import br.com.pronova.prodsync.domain.entities.Colaborador;
 import br.com.pronova.prodsync.domain.repositories.ColaboradorRepository;
@@ -22,5 +22,13 @@ public class ColaboradorController {
         // Para o MVP, retorna todos. No futuro, filtrar por 'ativo = true'.
         List<Colaborador> lista = colaboradorRepository.findAll();
         return ResponseEntity.ok(lista);
+    }
+    @org.springframework.web.bind.annotation.PostMapping
+    public ResponseEntity<Colaborador> criar(@org.springframework.web.bind.annotation.RequestBody Colaborador colaborador) {
+        colaborador.setAtivo(true);
+        if (colaborador.getRole() == null) {
+            colaborador.setRole(br.com.pronova.prodsync.domain.entities.Role.ROLE_SEPARADOR);
+        }
+        return ResponseEntity.ok(colaboradorRepository.save(colaborador));
     }
 }
