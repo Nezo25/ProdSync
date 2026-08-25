@@ -8,5 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface ColaboradorRepository extends JpaRepository<Colaborador, Long> {
-    Optional<Colaborador> findByNome(String nome);
+    Optional<Colaborador> findFirstByNome(String nome);
 }
+

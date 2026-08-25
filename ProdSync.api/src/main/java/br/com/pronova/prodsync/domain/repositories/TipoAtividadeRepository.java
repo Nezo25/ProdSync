@@ -8,5 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface TipoAtividadeRepository extends JpaRepository<TipoAtividade, Long> {
-    Optional<TipoAtividade> findByNome(String nome);
+    Optional<TipoAtividade> findFirstByNome(String nome);
 }
+

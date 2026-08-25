@@ -53,10 +53,10 @@ public class CsvImportService {
             }
 
             for (CsvRecordDTO record : records) {
-                Colaborador colaborador = colaboradorRepository.findByNome(record.getColaborador())
+                Colaborador colaborador = colaboradorRepository.findFirstByNome(record.getColaborador())
                         .orElseGet(() -> colaboradorRepository.save(Colaborador.builder().nome(record.getColaborador()).build()));
 
-                TipoAtividade atividade = tipoAtividadeRepository.findByNome(record.getTarefa())
+                TipoAtividade atividade = tipoAtividadeRepository.findFirstByNome(record.getTarefa())
                         .orElseGet(() -> tipoAtividadeRepository.save(TipoAtividade.builder().nome(record.getTarefa()).unidadeMedida("UN").build()));
 
                 LocalDateTime dataHora = LocalDateTime.parse(record.getDataHora(), formatter);
@@ -84,5 +84,6 @@ public class CsvImportService {
         }
     }
 }
+
 
 
