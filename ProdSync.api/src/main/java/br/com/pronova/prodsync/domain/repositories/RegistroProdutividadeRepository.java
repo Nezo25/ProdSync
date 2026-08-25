@@ -14,6 +14,8 @@ public interface RegistroProdutividadeRepository extends JpaRepository<RegistroP
 
     @Query("SELECT r FROM RegistroProdutividade r WHERE r.dataHora BETWEEN :inicio AND :fim")
     List<RegistroProdutividade> findByDataHoraBetween(@Param("inicio") LocalDateTime inicio, @Param("fim") LocalDateTime fim);
+
+    void deleteByDataHoraBetween(LocalDateTime inicio, LocalDateTime fim);
     
     @Query("SELECT COUNT(DISTINCT r.colaborador.id) FROM RegistroProdutividade r WHERE r.faixaHoraria = :faixaHoraria AND r.dataHora >= :data")
     Long countHeadcountByFaixaHorariaAndData(@Param("faixaHoraria") Integer faixaHoraria, @Param("data") LocalDateTime data);
@@ -26,3 +28,4 @@ public interface RegistroProdutividadeRepository extends JpaRepository<RegistroP
                    "GROUP BY DATE(r.data_hora), r.colaborador_id", nativeQuery = true)
     List<Object[]> getAgregacaoDiariaPorColaborador(@Param("inicio") LocalDateTime inicio, @Param("fim") LocalDateTime fim);
 }
+

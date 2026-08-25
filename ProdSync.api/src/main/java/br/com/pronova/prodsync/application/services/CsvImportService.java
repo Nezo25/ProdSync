@@ -43,6 +43,15 @@ public class CsvImportService {
             List<RegistroProdutividade> registrosParaSalvar = new ArrayList<>();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
+            java.util.Set<java.time.LocalDate> datasParaLimpar = new java.util.HashSet<>();
+            for (CsvRecordDTO record : records) {
+                LocalDateTime dh = LocalDateTime.parse(record.getDataHora(), formatter);
+                datasParaLimpar.add(dh.toLocalDate());
+            }
+            for (java.time.LocalDate data : datasParaLimpar) {
+                registroRepository.deleteByDataHoraBetween(data.atStartOfDay(), data.atTime(23, 59, 59));
+            }
+
             for (CsvRecordDTO record : records) {
                 Colaborador colaborador = colaboradorRepository.findByNome(record.getColaborador())
                         .orElseGet(() -> colaboradorRepository.save(Colaborador.builder().nome(record.getColaborador()).build()));
@@ -75,4 +84,5 @@ public class CsvImportService {
         }
     }
 }
+
 
