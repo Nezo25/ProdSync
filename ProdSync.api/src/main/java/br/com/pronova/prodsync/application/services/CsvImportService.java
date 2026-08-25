@@ -52,12 +52,19 @@ public class CsvImportService {
                 registroRepository.deleteByDataHoraBetween(data.atStartOfDay(), data.atTime(23, 59, 59));
             }
 
-            for (CsvRecordDTO record : records) {
-                Colaborador colaborador = colaboradorRepository.findFirstByNome(record.getColaborador())
-                        .orElseGet(() -> colaboradorRepository.save(Colaborador.builder().nome(record.getColaborador()).build()));
+            java.util.Map<String, Colaborador> colabCache = new java.util.HashMap<>();
+            java.util.Map<String, TipoAtividade> ativCache = new java.util.HashMap<>();
 
-                TipoAtividade atividade = tipoAtividadeRepository.findFirstByNome(record.getTarefa())
-                        .orElseGet(() -> tipoAtividadeRepository.save(TipoAtividade.builder().nome(record.getTarefa()).unidadeMedida("UN").build()));
+            for (CsvRecordDTO record : records) {
+                Colaborador colaborador = colabCache.computeIfAbsent(record.getColaborador(), nome -> 
+                    colaboradorRepository.findFirstByNome(nome)
+                        .orElseGet(() -> colaboradorRepository.save(Colaborador.builder().nome(nome).build()))
+                );
+
+                TipoAtividade atividade = ativCache.computeIfAbsent(record.getTarefa(), nome -> 
+                    tipoAtividadeRepository.findFirstByNome(nome)
+                        .orElseGet(() -> tipoAtividadeRepository.save(TipoAtividade.builder().nome(nome).unidadeMedida("UN").build()))
+                );
 
                 LocalDateTime dataHora = LocalDateTime.parse(record.getDataHora(), formatter);
 
@@ -84,6 +91,7 @@ public class CsvImportService {
         }
     }
 }
+
 
 
 
