@@ -57,10 +57,18 @@ public class DashboardService {
             Double primary = r.getQuantidadePrimaria() != null ? r.getQuantidadePrimaria() : 0.0;
             Double secondary = r.getQuantidadeSecundaria() != null ? r.getQuantidadeSecundaria() : 0.0;
 
-            horaDTO.setCaixa(horaDTO.getCaixa() + primary);
-            horaDTO.setVisita(horaDTO.getVisita() + secondary);
+            String nomeAtividade = r.getTipoAtividade() != null ? r.getTipoAtividade().getNome() : "";
+            
+            if ("Visitas".equalsIgnoreCase(nomeAtividade) || "Visita".equalsIgnoreCase(nomeAtividade)) {
+                horaDTO.setVisita(horaDTO.getVisita() + primary);
+                horaDTO.setCaixa(horaDTO.getCaixa() + secondary); // Apenas fallback
+            } else {
+                horaDTO.setCaixa(horaDTO.getCaixa() + primary);
+                horaDTO.setVisita(horaDTO.getVisita() + secondary);
+            }
         }
 
         return new ArrayList<>(matrizMap.values());
     }
 }
+
