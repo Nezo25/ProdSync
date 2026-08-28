@@ -57,11 +57,11 @@ public class BiDashboardService {
             
             double provisaoBonusDiario = 0.0;
             
-            if (mediaCaixasHora >= 350 || mediaVisitasHora >= 30) {
+            if (totalCaixas >= 350 || totalVisitas >= 30) {
                 provisaoBonusDiario = 900.0 / 22.0; // Azul
-            } else if (mediaCaixasHora >= 325 || mediaVisitasHora >= 28) {
+            } else if (totalCaixas >= 325 || totalVisitas >= 28) {
                 provisaoBonusDiario = 700.0 / 22.0; // Verde
-            } else if (mediaCaixasHora >= 300 || mediaVisitasHora >= 26) {
+            } else if (totalCaixas >= 300 || totalVisitas >= 26) {
                 provisaoBonusDiario = 500.0 / 22.0; // Amarelo
             }
 
@@ -166,11 +166,11 @@ public class BiDashboardService {
             somaVisitasColab += totalVisitas;
             horasTrabalhadasColab += horas;
 
-            if (cxHora >= 350 || viHora >= 30) {
+            if (totalCaixas >= 350 || totalVisitas >= 30) {
                 diasAzul++;
-            } else if (cxHora >= 325 || viHora >= 28) {
+            } else if (totalCaixas >= 325 || totalVisitas >= 28) {
                 diasVerde++;
-            } else if (cxHora >= 300 || viHora >= 26) {
+            } else if (totalCaixas >= 300 || totalVisitas >= 26) {
                 diasAmarelo++;
             } else {
                 diasSemMeta++;
