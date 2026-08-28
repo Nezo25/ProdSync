@@ -25,10 +25,10 @@ public class WebhookProtheusService {
     @org.springframework.scheduling.annotation.Async("webhookTaskExecutor")
     @org.springframework.cache.annotation.CacheEvict(value = "metricas_produtividade", allEntries = true)
     public void processarWebhook(WebhookPayloadDTO payload) {
-        Colaborador colaborador = colaboradorRepository.findByNome(payload.getNomeColaborador())
+        Colaborador colaborador = colaboradorRepository.findFirstByNome(payload.getNomeColaborador())
                 .orElseGet(() -> colaboradorRepository.save(Colaborador.builder().nome(payload.getNomeColaborador()).build()));
 
-        TipoAtividade tipoAtividade = tipoAtividadeRepository.findByNome(payload.getTipoAtividade())
+        TipoAtividade tipoAtividade = tipoAtividadeRepository.findFirstByNome(payload.getTipoAtividade())
                 .orElseGet(() -> tipoAtividadeRepository.save(TipoAtividade.builder().nome(payload.getTipoAtividade()).unidadeMedida("UN").build()));
 
         RegistroProdutividade registro = mapper.toEntity(payload);
